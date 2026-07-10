@@ -1,0 +1,31 @@
+{
+  "name": "los-electron-companion-template",
+  "version": "1.0.0",
+  "description": "A standalone desktop companion application template for any web-based Loan Origination System",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "electron ."
+  },
+  "keywords": [
+    "los",
+    "loan-origination",
+    "electron",
+    "template",
+    "companion",
+    "mortgage",
+    "integration"
+  ],
+  "author": {
+    "name": "Corey Burns",
+    "email": "burnsdevfeedback@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spuds0588/los-companion-electron-template.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.0"
+  }
+}

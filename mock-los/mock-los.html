@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generic LOS - Local Sandbox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131929;
+            --border-color: #222d4a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --secondary: #3b82f6;
+            --danger: #ef4444;
+            --font-outfit: 'Outfit', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-outfit);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .sandbox-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 4px 0 0 0;
+        }
+
+        .badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 24px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .panel-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 0;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            font-family: var(--font-outfit);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            text-align: center;
+        }
+        .btn-danger:hover {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .los-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .los-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .los-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+        }
+
+        .los-tab-btn.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-family: var(--font-outfit);
+            color: white;
+            font-size: 13px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .save-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-family: var(--font-outfit);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+        }
+
+        .save-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .monitor-panel {
+            grid-column: 1 / span 2;
+            background: #060913;
+            border-color: #17213c;
+            margin-top: 16px;
+        }
+
+        .monitor-line {
+            display: flex;
+            font-size: 12px;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .monitor-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .monitor-lbl {
+            color: var(--text-secondary);
+            font-weight: 500;
+            width: 120px;
+        }
+
+        .monitor-val {
+            font-family: var(--font-mono);
+            color: var(--primary);
+        }
+
+        .shadow-indicator {
+            grid-column: 1 / span 2;
+            margin-top: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: rgba(16, 185, 129, 0.02);
+            border: 1px dashed rgba(16, 185, 129, 0.2);
+            padding: 16px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sandbox-container">
+        <!-- Mock App Header -->
+        <header>
+            <div class="header-title">
+                <h1>Generic LOS Sandbox</h1>
+                <p>Telemetry Simulation Node Page</p>
+            </div>
+            <span class="badge">TEST ENVIRONMENT</span>
+        </header>
+
+        <!-- Main Controller Body -->
+        <div class="grid">
+            <!-- Left panel: Path router simulator -->
+            <div class="panel">
+                <h3 class="panel-title">1. Dynamic SPA Routing</h3>
+                
+                <!-- Quick Preset Buttons -->
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="setLoan(1004562)">Load Loan: #1004562</button>
+                    <button class="btn btn-outline" onclick="setLoan(2087541)">Load Loan: #2087541</button>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="los-tabs">
+                    <button class="los-tab-btn active" id="tab-center" onclick="setTab('Loan_Center')">Loan Center</button>
+                    <button class="los-tab-btn" id="tab-borrower" onclick="setTab('Borrower_Information')">Borrower Info</button>
+                    <button class="los-tab-btn" id="tab-closing" onclick="setTab('Closing')">Closing</button>
+                </div>
+
+                <button class="btn btn-danger" style="width: 100%;" onclick="clearLoan()">Clear Loan (Logout)</button>
+            </div>
+
+            <!-- Right panel: Local storage simulation -->
+            <div class="panel">
+                <h3 class="panel-title">2. Session Variables</h3>
+                
+                <div class="input-group">
+                    <label for="input-email">User Email</label>
+                    <input type="text" id="input-email" value="broker_test@example.com">
+                </div>
+                
+                <div class="input-group">
+                    <label for="input-role">User Role</label>
+                    <input type="text" id="input-role" value="Loan Officer">
+                </div>
+
+                <button class="save-btn" onclick="saveSession()">Save User Session</button>
+            </div>
+
+            <!-- Monitor Panel displaying current URL / state info -->
+            <div class="panel monitor-panel">
+                <h3 class="panel-title">3. Real-time DOM State</h3>
+                <div class="monitor-line">
+                    <span class="monitor-lbl">Current Location:</span>
+                    <span class="monitor-val" id="monitor-url" style="color: #60a5fa;">-</span>
+                </div>
+                <div class="monitor-line">
+                    <span class="monitor-lbl">Presence state:</span>
+                    <span class="monitor-val" id="monitor-presence">-</span>
+                </div>
+            </div>
+
+            <!-- Stand-in for a host app's SPA root element -->
+            <app-root style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-secondary); text-align: center;">
+                &lt;app-root&gt; Generic LOS SPA Base Wrapper Content Loaded &lt;/app-root&gt;
+            </app-root>
+        </div>
+    </div>
+
+    <!-- Simulation state script -->
+    <script>
+        let currentLoan = '1004562';
+        let currentTab = 'Loan_Center';
+
+        function updateMockState() {
+            const mockUrl = `http://localhost:4567/loan/${currentLoan}/${currentTab}`;
+            
+            // PushState updates the address bar URL in Electron, triggering did-navigate-in-page
+            history.pushState(null, '', mockUrl);
+            
+            document.getElementById('monitor-url').textContent = window.location.href;
+            
+            // Update active states on tab elements
+            document.querySelectorAll('.los-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (currentTab === 'Loan_Center') document.getElementById('tab-center').classList.add('active');
+            if (currentTab === 'Borrower_Information') document.getElementById('tab-borrower').classList.add('active');
+            if (currentTab === 'Closing') document.getElementById('tab-closing').classList.add('active');
+        }
+
+        function setLoan(id) {
+            currentLoan = id;
+            updateMockState();
+        }
+
+        function setTab(name) {
+            currentTab = name;
+            updateMockState();
+        }
+
+        function clearLoan() {
+            currentLoan = '';
+            currentTab = '';
+            history.pushState(null, '', 'http://localhost:4567/login');
+            document.getElementById('monitor-url').textContent = window.location.href;
+            document.querySelectorAll('.los-tab-btn').forEach(btn => btn.classList.remove('active'));
+        }
+
+        function saveSession() {
+            const email = document.getElementById('input-email').value;
+            const role = document.getElementById('input-role').value;
+            
+            const userData = {
+                userEmail: email,
+                userRole: role,
+                userName: "John Doe",
+                companyName: "Acme Mortgage LLC"
+            };
+            
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            // Force heartbeat to trigger immediate telemetry output in CLI
+            console.log('[LOS Sandbox] Saved session. Dispatching force heartbeat request');
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        // Initialize state indicators
+        window.addEventListener('load', () => {
+            // Save initial session values
+            saveSession();
+            
+            document.getElementById('monitor-url').textContent = window.location.href;
+            document.getElementById('monitor-presence').textContent = document.visibilityState === 'visible' ? 'Visible' : 'Hidden';
+            
+            // Track visibility state updates
+            document.addEventListener('visibilitychange', () => {
+                document.getElementById('monitor-presence').textContent = document.visibilityState === 'visible' ? 'Visible' : 'Hidden';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOS Companion — Electron Desktop Template for Any Web-Based Loan Origination System</title>
+<meta name="description" content="Free, open-source Electron desktop template that pairs any web-based Loan Origination System — even closed, API-less platforms — with a side-by-side companion sidebar: SPA route tracking, Shadow DOM overlays, isolated session partition, and a Node.js API bus that bypasses browser CORS/CSP limits. A starting point to build on, not a finished product.">
+<link rel="canonical" href="https://spuds0588.github.io/los-companion-electron-template/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LOS Companion — Electron Desktop Template for Any Web-Based LOS">
+<meta property="og:description" content="Run any web-based LOS side-by-side with a companion app you control. Free open-source Electron template: copy it, configure one file, and start building.">
+<meta property="og:url" content="https://spuds0588.github.io/los-companion-electron-template/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LOS Companion — Electron Desktop Template for Any Web-Based LOS">
+<meta name="twitter:description" content="Run any web-based LOS side-by-side with a companion app you control. Free open-source Electron template: copy it, configure one file, and start building.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0f19">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "LOS Companion Electron Desktop Template",
+  "description": "A platform-agnostic Electron desktop application template that runs any web-based Loan Origination System (LOS) side-by-side with a companion sidebar — including closed platforms with no public API. Features WebContentsView dual-pane layout, SPA navigation tracking, Shadow DOM floating action button injection, an isolated persist session partition, localStorage session extraction, presence heartbeats, and a Node.js-backed IPC API bus that bypasses browser CORS/CSP restrictions. MIT licensed. A template to copy and build upon, not a finished product.",
+  "codeRepository": "https://github.com/Spuds0588/los-companion-electron-template",
+  "url": "https://spuds0588.github.io/los-companion-electron-template/",
+  "programmingLanguage": ["JavaScript"],
+  "runtimePlatform": "Electron",
+  "license": "https://opensource.org/licenses/MIT",
+  "author": {
+    "@type": "Person",
+    "name": "Corey Burns",
+    "email": "burnsdevfeedback@gmail.com"
+  },
+  "keywords": "loan origination system, LOS integration, electron, desktop companion app, mortgage tech, shadow DOM, CRM sync, closed platform integration, CORS bypass, fintech",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the LOS Companion Electron Desktop Template?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A free, MIT-licensed Electron template that runs any web-based Loan Origination System side-by-side with a companion sidebar you build. It handles SPA navigation tracking, Shadow DOM overlay injection, session isolation, and a Node.js API bus — with no hardcoded LOS platform. You copy it and configure it for your LOS."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work with LOS platforms that have no API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — that is the core use case. It works with closed systems by design: it observes the page URL and localStorage, injects its own isolated UI, and reaches external services through Electron's main process, so it needs no official integration, API keys, or vendor approval."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why use the desktop template instead of the browser extension template?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Choose the desktop template when you need a full companion UI next to the LOS, CORS/CSP-free Node.js networking, or a completely isolated session partition that keeps LOS authentication separate from the user's personal browser. Choose the browser extension template when the tool must live inside the user's existing Chrome workflow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this a finished product I can install and use today?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It is a developer template — a starting point intended to be copied and built on top of. You point it at your LOS's URL structure, then add your own actions, integrations, and business logic."
+      }
+    }
+  ]
+}
+</script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #0b0f19;
+    color: #e2e8f0;
+    line-height: 1.6;
+}
+.wrap { max-width: 880px; margin: 0 auto; padding: 64px 24px; }
+.badge {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #10b981; border: 1px solid rgba(16,185,129,.35);
+    background: rgba(16,185,129,.08); border-radius: 999px; padding: 6px 14px; margin-bottom: 20px;
+}
+h1 {
+    font-size: clamp(30px, 5vw, 44px); line-height: 1.15; font-weight: 800;
+    background: linear-gradient(90deg, #e2e8f0, #94a3b8);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+}
+.lede { font-size: 18px; color: #94a3b8; max-width: 720px; margin-bottom: 32px; }
+.lede strong { color: #e2e8f0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 56px; }
+.btn {
+    display: inline-block; padding: 13px 26px; border-radius: 10px; font-weight: 600;
+    font-size: 15px; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 4px 15px rgba(16,185,129,.25); }
+.btn-secondary { background: rgba(255,255,255,.04); color: #e2e8f0; border: 1px solid #222d4a; }
+h2 { font-size: 24px; font-weight: 700; margin: 48px 0 16px; color: #e2e8f0; }
+h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: #e2e8f0; }
+p { color: #94a3b8; margin-bottom: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 24px 0; }
+.card {
+    background: #131929; border: 1px solid #222d4a; border-radius: 14px; padding: 22px;
+}
+.card p { margin: 0; font-size: 14px; }
+.callout {
+    background: rgba(16,185,129,.05); border: 1px solid rgba(16,185,129,.25);
+    border-radius: 14px; padding: 22px; margin: 24px 0;
+}
+.callout p { margin: 0 0 10px; }
+.callout p:last-child { margin-bottom: 0; }
+.steps { counter-reset: step; margin: 24px 0; }
+.step {
+    position: relative; padding: 18px 18px 18px 58px; background: #131929;
+    border: 1px solid #222d4a; border-radius: 14px; margin-bottom: 12px;
+}
+.step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 18px; top: 18px; width: 26px; height: 26px; border-radius: 8px;
+    background: linear-gradient(135deg, #10b981, #3b82f6); color: #fff; font-weight: 700;
+    font-size: 13px; display: flex; align-items: center; justify-content: center;
+}
+.step p { margin: 0; font-size: 14px; }
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em;
+    background: rgba(255,255,255,.06); border-radius: 5px; padding: 2px 6px; color: #7dd3fc;
+}
+.agent-box {
+    background: #060913; border: 1px dashed rgba(16,185,129,.4); border-radius: 14px;
+    padding: 22px; margin: 24px 0;
+}
+.agent-box p { font-size: 14px; }
+.agent-prompt {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px;
+    color: #a5f3fc; background: rgba(0,0,0,.4); border-radius: 10px; padding: 14px;
+    margin: 12px 0; line-height: 1.55;
+}
+.small { font-size: 13px; }
+footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid #222d4a; font-size: 13px; }
+footer p { margin-bottom: 6px; }
+footer a { color: #7dd3fc; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+.sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+    <span class="badge">Open Source &middot; MIT &middot; Template</span>
+    <h1>Run any web-based LOS side-by-side with a companion app you control</h1>
+    <p class="lede">
+        <strong>LOS Companion</strong> is a free Electron desktop template for developers whose LOS is a
+        closed system by design — no public API, no interconnectivity, no vendor approval process.
+        Copy the template, point it at your LOS, and build the integrations your vendor never shipped —
+        with full Node.js power next to the app, not trapped behind browser CORS and CSP.
+    </p>
+    <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/Spuds0588/los-companion-electron-template">View the Template on GitHub</a>
+        <a class="btn btn-secondary" href="#build-on-it">Start Building &rarr;</a>
+    </div>
+</header>
+
+<main>
+<section aria-labelledby="who">
+    <h2 id="who">Built for closed LOS platforms</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>No API? No problem.</h3>
+            <p>Works with LOS platforms that have little or no interconnectivity. The app observes what the page already exposes — URL structure and localStorage — and injects its own UI. No vendor keys, no integration approvals.</p>
+        </div>
+        <div class="card">
+            <h3>CORS and CSP don't apply.</h3>
+            <p>Third-party requests run in Electron's main process via a secure IPC bridge, where browser CORS and content-security policies don't bind. Call CRMs, webhooks, and databases directly from your companion code.</p>
+        </div>
+        <div class="card">
+            <h3>Fully isolated session.</h3>
+            <p>The LOS runs in its own persistent Chromium partition, keeping its authentication completely separate from the user's personal browser — and from every other app on the machine.</p>
+        </div>
+        <div class="card">
+            <h3>Any platform, one config.</h3>
+            <p>Zero hardcoded LOS specifics. Add URL patterns with named capture groups to a single config file — layout, context tracking, overlays, and telemetry all key off it.</p>
+        </div>
+    </div>
+</section>
+
+<section aria-labelledby="not-product">
+    <h2 id="not-product">A starting point, not a finished product</h2>
+    <p>This is a <strong>template to copy and build on</strong> — not an app you download and use today. It gives you the foundation: the dual-pane workspace, the parts that are annoying and fragile to get right against a hostile SPA, and a clean IPC architecture. What you build on top is yours to decide: CRM sync, video rooms, checklists, dashboards, custom workflows.</p>
+    <div class="steps">
+        <div class="step"><p><strong>Clone or copy the repo</strong> and run <code>npm install</code> &middot; <code>npm start</code>. Electron is the only dependency.</p></div>
+        <div class="step"><p><strong>Configure your LOS</strong> in <code>config.js</code>: URL patterns with named capture groups for the active record ID and tab. Launch via the built-in launchpad.</p></div>
+        <div class="step"><p><strong>Verify against the mock LOS</strong> included in the repo — it simulates SPA routing and session storage so you can develop offline before touching production.</p></div>
+        <div class="step"><p><strong>Build your features.</strong> Wire the declarative button config, the contextBridge APIs, and the main-process message hub to whatever your workflow needs.</p></div>
+    </div>
+</section>
+
+<section aria-labelledby="build-on-it">
+    <h2 id="build-on-it">Want an agent to build it with you?</h2>
+    <div class="callout">
+        <p><strong>Recommendation:</strong> <a style="color:#10b981; font-weight:600;" href="https://freebuff.com/?ref=ref-73e83c98-19cf-45b0-952e-56c4090f15f2" rel="noopener">Freebuff</a> is a solid free option for taking this template from clone to custom tool. Give it the prompt below, answer its questions about your LOS and your goal, and it will customize the template for you.</p>
+        <div class="agent-prompt">Copy the open-source template at https://github.com/Spuds0588/los-companion-electron-template and help me customize it for my web-based LOS. Ask me for my LOS URL structure and what I want the companion app to do, then configure config.js for my platform and build out the features I describe.</div>
+        <p class="small">Prefer to work directly with the code? Everything you need is in the <a style="color:#7dd3fc;" href="https://github.com/Spuds0588/los-companion-electron-template#readme">README</a>.</p>
+    </div>
+</section>
+</main>
+
+<footer>
+    <p><strong>LOS Companion Electron Desktop Template</strong> &middot; MIT License &middot; Maintained by Corey Burns &middot; <a href="mailto:burnsdevfeedback@gmail.com">burnsdevfeedback@gmail.com</a></p>
+    <p>Also available: the <a href="https://spuds0588.github.io/los-companion-extension-template/">LOS Companion Extension Template</a> — the same concept as a Chrome extension for when the tool must live inside the user's existing browser workflow.</p>
+    <p><a href="https://github.com/Spuds0588/los-companion-electron-template">GitHub</a> &middot; <a href="https://github.com/Spuds0588/los-companion-electron-template/fork">Fork</a> &middot; <a href="https://github.com/Spuds0588/los-companion-electron-template/issues">Issues</a></p>
+</footer>
+
+</div>
+</body>
+</html>

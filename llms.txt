@@ -1,0 +1,42 @@
+# LOS Companion Electron Desktop Template
+
+A free, MIT-licensed Electron desktop application template for building companion tools alongside **any web-based Loan Origination System (LOS)** — including closed platforms with no public API and no interconnectivity.
+
+- Repository: https://github.com/Spuds0588/los-companion-electron-template
+- Landing page: https://spuds0588.github.io/los-companion-electron-template/
+- License: MIT
+- Author / contact: Corey Burns — burnsdevfeedback@gmail.com
+
+## What it is
+
+A starting point for developers, not a finished product. The template runs the LOS in a dual-pane Electron workspace (`WebContentsView` + `BaseWindow`) with a companion sidebar you build on the other side:
+
+- **SPA navigation tracking:** native `did-navigate` / `did-navigate-in-page` listeners with a config-driven URL parser (named capture groups: `entityId`, `entityTab`, `subdomain`).
+- **Shadow DOM overlay injection:** declarative floating action buttons rendered inside the LOS view, isolated from host CSS.
+- **Isolated session partition:** the LOS authenticates in its own `persist:` partition, separate from the user's personal browser.
+- **Session extraction:** filtered localStorage reads (user keys) surfaced to the sidebar via a `contextBridge` API.
+- **Node.js API bus:** main-process IPC hub for outbound calls to CRMs, webhooks, and databases — outside browser CORS/CSP restrictions.
+- **Local mock LOS:** a self-contained mock page simulating SPA routing and localStorage for offline development.
+
+## Who it is for
+
+- Teams whose LOS vendor offers **little or no interconnectivity** — no API, no webhooks, no integration marketplace.
+- Developers building **personal or internal tools** where formal approval to integrate with the LOS directly would never be granted. The app reads only what the LOS page already exposes and reaches external services through its own main process.
+
+## Key property: platform-agnostic by design
+
+There are no hardcoded LOS platforms anywhere in the codebase. Adaptation to any web-based LOS is a single-file change: replace the ordered `urlPatterns` list in `config.js` with your platform's URL structure. The README documents this in two steps.
+
+## How to use
+
+1. Copy or fork the repository; `npm install` (Electron is the only dependency).
+2. Configure URL patterns in `config.js` for your LOS.
+3. Launch with `npm start`, load your LOS via the launchpad, or test against the bundled mock.
+4. Build your features on the declarative config, contextBridge APIs, and IPC hub.
+
+Full technical documentation: https://github.com/Spuds0588/los-companion-electron-template#readme
+
+## Related project
+
+**LOS Companion Extension Template** — the same concept as a Chrome extension, for when the tool must live inside the user's existing browser workflow instead of a dedicated desktop workspace.
+Repository: https://github.com/Spuds0588/los-companion-extension-template · Landing page: https://spuds0588.github.io/los-companion-extension-template/
