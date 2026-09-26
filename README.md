@@ -1,5 +1,7 @@
 # LOS Companion Desktop Template
 
+> **🌐 Live landing page:** [spuds0588.github.io/los-companion-electron-template](https://spuds0588.github.io/los-companion-electron-template/) — quick overview, FAQ, and a ready-to-use AI-agent prompt for customizing this template.
+
 A lightweight, high-performance Electron desktop wrapper and companion application template. It acts as an integration and companion hub for **any web-based Loan Origination System (LOS)**.
 
 This template provides a side-by-side workspace: the live LOS on one side and a premium reactive Companion Sidebar on the other. It includes shadow DOM overlay button injection, real-time SPA navigation tracking, and a Node.js-powered secure API bus that bypasses browser-level CORS/CSP limits.
